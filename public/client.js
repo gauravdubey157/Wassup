@@ -1,4 +1,5 @@
-const socket=io()
+const socket = io('https://wassup-theta.vercel.app:3000');
+
 
 let names;
 const textarea=document.querySelector('#textarea')
