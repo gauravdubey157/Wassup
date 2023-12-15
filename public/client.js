@@ -1,4 +1,4 @@
-const socket = io('https://wassup-theta.vercel.app:3000');
+const socket = io(`https://wassup-theta.vercel.app`);
 
 
 let names;
