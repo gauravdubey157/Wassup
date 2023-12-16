@@ -80,6 +80,7 @@ textarea{
     background-color: aqua;
     margin: 0 auto;
     top: -20px;
+    border:2px solid grey;
 }
 
 .message h4{
@@ -88,4 +89,15 @@ textarea{
     color: #333;
     left:2px;
     font-size: 14px;
+}
+
+
+#sendbtn{
+    width:15%;
+    border:2px solid black;
+    cursor: pointer;
+}
+
+.container{
+    display:flex;
 }
