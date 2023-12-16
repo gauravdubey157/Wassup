@@ -4,6 +4,7 @@ const socket = io();
 let names;
 const textarea=document.querySelector('#textarea')
 const messageArea=document.querySelector('.message__area')
+const button=document.querySelector('#sendbtn')
 
 do{
     names=prompt('Please enter your name: ')
@@ -16,6 +17,10 @@ textarea.addEventListener('keyup', (e)=>{
     {
         sendMessage(e.target.value) 
     }
+})
+
+button.addEventListener('click', ()=>{
+    sendMessage(textarea.value);
 })
 
 function sendMessage(message)
@@ -32,9 +37,6 @@ function sendMessage(message)
 
     //send to server
     socket.emit('message', msg)    //message here is event and msg is data which we are emiting
-    // Client-side JavaScript
-
-
 }
 
 
