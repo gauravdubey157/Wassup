@@ -25,12 +25,13 @@ const io=require('socket.io')(http)
 io.on('connection', (socket)=>{
     console.log('connected...');
     
-    socket.on('join', (name) => {
-    socket.broadcast.emit('join', name)
+    socket.on('join', (names) => {
+    socket.username=names;
+    socket.broadcast.emit('join', names)
     });
 
     socket.on('disconnect', () => {
-        socket.broadcast.emit('leave', socket.username);
+        socket.broadcast.emit('leave', socket.username); // Use the stored name
     });
 
     socket.on('message',(msg)=>{
