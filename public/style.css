@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 *{
     padding:0;
     margin:0;
@@ -10,7 +12,7 @@ body{
     justify-content: center;
     min-height: 100vh;
     background: gray;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 section.chat__section{
@@ -69,18 +71,31 @@ textarea{
     background: #8F8BE8;
     color: #fff; 
     margin-right:auto; 
+    
+    max-width: 70%;
+    word-wrap: break-word;
+    padding: 10px;
 }
 .outgoing {
     background: rgb(73, 202, 73);
     color: #fff;
     margin-left: auto;
+    
+    max-width: 70%;
+    word-wrap: break-word;
+    padding: 10px;
 }
 
 .center{
     background-color: aqua;
-    margin: 0 auto;
+    margin: 5px auto;
     top: -20px;
     border:2px solid grey;
+
+    max-width: 70%;
+    word-wrap: break-word;
+    padding: 10px;
+    height:auto;
 }
 
 .message h4{
@@ -96,8 +111,13 @@ textarea{
     width:15%;
     border:2px solid black;
     cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(180, 116, 126);
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
 }
 
 .container{
     display:flex;
 }
+
