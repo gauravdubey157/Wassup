@@ -1,5 +1,4 @@
-const socket = io();
-
+const socket=io()
 
 let names;
 const textarea=document.querySelector('#textarea')
@@ -22,6 +21,7 @@ textarea.addEventListener('keyup', (e)=>{
 button.addEventListener('click', ()=>{
     sendMessage(textarea.value);
 })
+
 
 function sendMessage(message)
 {
@@ -49,24 +49,27 @@ function appendMessage(msg, type)
     mainDiv.classList.add(className, 'message')
 
     let markup;
-    if (type === 'center') 
+    if (type === 'center' && msg.message!='') 
     { // For join and leave messages
         markup = `<p>${msg.message}</p>`;
     } 
-    else 
+    else if(msg.message!='')
     { // For regular messages
         markup = `
             <h4>${msg.user}</h4>
             <p>${msg.message}</p>
         `;
     }
+    else
+    return;
+
     mainDiv.innerHTML=markup;
     messageArea.appendChild(mainDiv)
     scrollToBottom();
 }
 
-socket.on('join',(name)=>{
-    appendMessage({ message: `${name} joined` },'center');
+socket.on('join',(names)=>{
+    appendMessage({ message: `${names} joined` },'center');
 });
 
 // Recieve messages
@@ -75,12 +78,11 @@ socket.on('message',(msg)=>{
     scrollToBottom();
 })
 
-socket.on('leave', (name) => {
-    if (name) {
-        appendMessage({ message: `${name} left` }, 'center');
+socket.on('leave', (names) => {
+    if (names) {
+        appendMessage({ message: `${names} left` }, 'center');
     }
 });
-
 
 
 function scrollToBottom(){
