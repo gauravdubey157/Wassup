@@ -1,90 +1,95 @@
-const socket=io()
+const socket = io();
 
-let names;
-const textarea=document.querySelector('#textarea')
-const messageArea=document.querySelector('.message__area')
-const button=document.querySelector('#sendbtn')
+let names, room;
+const textarea = document.querySelector('#textarea');
+const messageArea = document.querySelector('.message__area');
+const button = document.querySelector('#sendbtn');
+const backbtn=document.querySelector('#backbtn')
 
-do{
-    names=prompt('Please enter your name: ')
-}while(!names)
+let audio=new Audio('tune.mp3')
+audio.preload='auto'
+audio.load();
 
-socket.emit('join', names);
-
-textarea.addEventListener('keyup', (e)=>{
-    if(e.key==='Enter')
-    {
-        sendMessage(e.target.value) 
-    }
+backbtn.addEventListener('click',()=>{
+    // window.history.back()
+    window.location.href='/'
 })
 
-button.addEventListener('click', ()=>{
+
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    names = urlParams.get('names');
+    room = urlParams.get('room');
+    const action = urlParams.get('action');
+
+    if (action === 'joinRoom' && room) {
+        joinRoom(room);
+    } else if (action === 'talk') {
+        randomChat();
+    }
+
+    listenForMessages();
+};
+
+function joinRoom(room) {
+    socket.emit('joinRoom', { names, room });
+}
+
+function randomChat() {
+    room = 'RandomRoom';
+    socket.emit('joinRoom', { names, room });
+}
+
+function listenForMessages() {
+    socket.on('message', (msg) => {
+        const type = msg.type === 'center' ? 'center' : (msg.user === names ? 'outgoing' : 'incoming');
+        appendMessage(msg, type);
+    });
+}
+
+textarea.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+        sendMessage(e.target.value);
+    }
+});
+
+button.addEventListener('click', () => {
     sendMessage(textarea.value);
-})
-
-
-function sendMessage(message)
-{
-    let msg={
-        user:names,
-        message:message.trim()
-    }
-
-    //append
-    appendMessage(msg, 'outgoing')
-    textarea.value=''
-    scrollToBottom()
-
-    //send to server
-    socket.emit('message', msg)    //message here is event and msg is data which we are emiting
-}
-
-
-
-function appendMessage(msg, type)
-{
-    let mainDiv=document.createElement('div')
-    let className=type;
-
-    mainDiv.classList.add(className, 'message')
-
-    let markup;
-    if (type === 'center' && msg.message!='') 
-    { // For join and leave messages
-        markup = `<p>${msg.message}</p>`;
-    } 
-    else if(msg.message!='')
-    { // For regular messages
-        markup = `
-            <h4>${msg.user}</h4>
-            <p>${msg.message}</p>
-        `;
-    }
-    else
-    return;
-
-    mainDiv.innerHTML=markup;
-    messageArea.appendChild(mainDiv)
-    scrollToBottom();
-}
-
-socket.on('join',(names)=>{
-    appendMessage({ message: `${names} joined` },'center');
 });
 
-// Recieve messages
-socket.on('message',(msg)=>{
-    appendMessage(msg,'incoming');
-    scrollToBottom();
-})
+function sendMessage(message) {
+    let msg = {
+        user: names,
+        message: message.trim(),
+        room: room
+    };
 
-socket.on('leave', (names) => {
-    if (names) {
-        appendMessage({ message: `${names} left` }, 'center');
+    if (msg.message) {
+        // appendMessage(msg, 'outgoing');
+        textarea.value = '';
+        scrollToBottom();
+        socket.emit('message', msg);
     }
-});
+}
 
+function appendMessage(msg, type) {
+    let mainDiv = document.createElement('div');
+    mainDiv.classList.add(type, 'message');
 
-function scrollToBottom(){
-    messageArea.scrollTop=messageArea.scrollHeight
+    // Get the current time
+    let currentTime = new Date();
+    let timestamp = currentTime.getHours() + ':' + currentTime.getMinutes().toString().padStart(2, '0');
+
+    let markup = (type === 'center') 
+        ? `<p>${msg.message}</p>` 
+        : `<h4>${msg.user}</h4><p>${msg.message}</p><span class="timestamp">${timestamp}</span>`;
+
+    mainDiv.innerHTML = markup;
+    messageArea.appendChild(mainDiv);
+    scrollToBottom();
+    audio.play();
+}
+
+function scrollToBottom() {
+    messageArea.scrollTop = messageArea.scrollHeight;
 }
