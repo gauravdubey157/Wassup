@@ -1,40 +1,45 @@
-const express=require('express')
-const cors = require('cors')
-const app=express()
+const express = require('express');
+const cors=require('cors')
+const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 app.use(cors())
 
-const http=require('http').createServer(app)
+const PORT = process.env.PORT || 7000;
 
-const PORT=process.env.PORT || 7000
+app.use(express.static(__dirname + '/public'));
 
-http.listen(PORT, ()=>{
-    console.log(`listening on port ${PORT}`);
-})
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
 
-app.use(express.static(__dirname+ '/public'))
+app.get('/chat', (req, res) => {
+    res.sendFile(__dirname + '/public/chat.html'); // Ensure this file is in the public directory
+});
 
-app.get('/', (req,res) => {
-    res.sendFile(__dirname + '/index.html')
-})
+io.on('connection', (socket) => {
+    console.log('Connected...');
 
-//socket
+    socket.on('joinRoom', ({ names, room }) => {
+        socket.username = names;
+        socket.room = room; // Store the room name in the socket session
+        socket.join(room);
+        socket.to(room).emit('message', { type: 'center', message: `${names} has joined the room` });
+    });
 
-const io=require('socket.io')(http)
-
-io.on('connection', (socket)=>{
-    console.log('connected...');
-    
-    socket.on('join', (names) => {
-    socket.username=names;
-    socket.broadcast.emit('join', names)
+    socket.on('message', (msg) => {
+        io.to(msg.room).emit('message', msg);
     });
 
     socket.on('disconnect', () => {
-        socket.broadcast.emit('leave', socket.username); // Use the stored name
+        // Use socket.room, which was stored when the user joined
+        if (socket.username && socket.room) {
+            io.to(socket.room).emit('message', { type: 'center', message: `${socket.username} has left the room` });
+        }
     });
+});
 
-    socket.on('message',(msg)=>{
-    socket.broadcast.emit('message', msg)
-    });
-})
+http.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
