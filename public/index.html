@@ -3,32 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.css">
     <title>Wassup</title>
-    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <section class="chat__section">
-        <div class="brand">
-            <img height="40" src="/logo.png" alt="">
-            <h1>Wassup</h1>
-        </div>
+    <div class="login">
+        <h1>Welcome to Wassup!</h1>
+        <input type="text" id="username" placeholder="Enter Your Name">
+        <button onclick="startChat('talk')">Talk to Strangers</button>
+        <button onclick="startChat('joinRoom')">Join Room</button>
+    </div>
 
-        <div class="message__area">
-            <!-- <div class="incoming message">
-                <h4>Gaurav</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, laudantium.</p>      
-            </div>
-            <div class="outgoing message">
-                <h4>Rishu</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, nemo.</p>
-            </div> -->
-        </div>
-        <div class="container">
-            <textarea id="textarea" cols="30" rows="1" placeholder="Write a message"></textarea>    
-            <button id="sendbtn">Send</button>
-        </div>
-    </section>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/client.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
