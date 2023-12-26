@@ -15,6 +15,11 @@ body{
     min-height: 100vh;
     background: #ECEFF1;
     /* font-family: 'Roboto', sans-serif; */
+
+    background-image: url('pc.jpg'); /* Make sure this path is correct */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 section.chat__section{
@@ -22,6 +27,12 @@ section.chat__section{
     max-width: 90%;
     border-radius: 12px;
     overflow: hidden;
+
+    background-image: url('web.png'); /* Make sure this path is correct */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
     /* border-radius: 15px; */
     /* background-image: url('chat.png');
     background-size: cover; 
@@ -54,7 +65,7 @@ section.chat__section{
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    background: #FFFFFF;
+    /* background: black; */
     padding-top: 40px;
 
     /* background: #FFFFFF; */
@@ -63,7 +74,7 @@ section.chat__section{
 .container {
     display: flex;
     /* padding: 10px; */
-    background: #fff;
+    /* background: #fff; */
     /* align-items: center; */
 }
 
@@ -178,3 +189,4 @@ padding: 15px 20px;
     margin-top: 6px;
     font-weight: bold;
 }
+
