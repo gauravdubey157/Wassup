@@ -6,7 +6,7 @@ html {
   body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
-    background-image: url('bg.jpg'); /* Make sure this path is correct */
+    background-image: url('bg.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -26,7 +26,6 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Rest of your container styles */
   }
   
   input[type="text"], button {
