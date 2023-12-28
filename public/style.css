@@ -16,7 +16,7 @@ body{
     background: #ECEFF1;
     /* font-family: 'Roboto', sans-serif; */
 
-    background-image: url('pc.jpg'); /* Make sure this path is correct */
+    background-image: url('pc.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -28,7 +28,7 @@ section.chat__section{
     border-radius: 12px;
     overflow: hidden;
 
-    background-image: url('web.png'); /* Make sure this path is correct */
+    background-image: url('web.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
