@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/chat', (req, res) => {
-    res.sendFile(__dirname + '/public/chat.html'); // Ensure this file is in the public directory
+    res.sendFile(__dirname + '/public/chat.html'); 
 });
 
 io.on('connection', (socket) => {
