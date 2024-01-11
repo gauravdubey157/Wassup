@@ -29,10 +29,10 @@ html {
   }
   
   input[type="text"], button {
-    width: calc(100% - 6px); /* Adjusting for padding, if any */
+    width: calc(100% - 6px);
     padding: 10px;
-    margin-bottom: 10px; /* Space between elements */
-    box-sizing: border-box; /* Include padding and border in the element's total width */
+    margin-bottom: 10px; 
+    box-sizing: border-box; 
   }
   
   button {
