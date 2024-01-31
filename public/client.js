@@ -15,7 +15,6 @@ backbtn.addEventListener('click',()=>{
     window.location.href='/'
 })
 
-
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     names = urlParams.get('names');
