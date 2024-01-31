@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
 
     socket.on('joinRoom', ({ names, room }) => {
         socket.username = names;
-        socket.room = room; // Store the room name in the socket session
+        socket.room = room;    // Store the room name in the socket session
         socket.join(room);
         socket.to(room).emit('message', { type: 'center', message: `${names} has joined the room` });
     });
